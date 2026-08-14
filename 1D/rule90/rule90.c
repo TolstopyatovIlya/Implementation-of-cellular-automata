@@ -2,21 +2,21 @@
 
 #define ESC 27
 
-void newGeneration(const size_t WIDTH, int array[]) {
-	int newArray[WIDTH];
+void newGeneration(const size_t WIDTH, int currentGeneration[]) {
+	int newGeneration[WIDTH];
 	for(size_t i = 0; i < WIDTH; ++i) { 
-		int left = i == 0 ? 0 : array[i-1];
-		int right = i == WIDTH-1 ? 0 : array[i+1];
-		newArray[i] = left ^ right;
+		int left = i == 0 ? 0 : currentGeneration[i-1];
+		int right = i == WIDTH-1 ? 0 : currentGeneration[i+1];
+		newGeneration[i] = left ^ right;
 	}
 	for(size_t i = 0; i < WIDTH; ++i) {
-		array[i] = newArray[i];
+		currentGeneration[i] = newGeneration[i];
 	}
 }
 
-void draw(const size_t WIDTH, int array[]) {
+void draw(const size_t WIDTH, int currentGeneration[]) {
 	for(size_t i = 0; i < WIDTH; ++i) {
-		printw(array[i] ? "#" : " ");
+		printw(currentGeneration[i] ? "#" : " ");
 	}
 	printw("\n");
 	refresh();
@@ -32,16 +32,16 @@ int main(void) {
 	curs_set(0);
 
 	const size_t WIDTH = COLS;
-	int array[WIDTH];
+	int currentGeneration[WIDTH];
 	for(size_t i = 0; i < WIDTH; ++i) {
-		array[i] = 0;
+		currentGeneration[i] = 0;
 	}
-	array[WIDTH/2] = 1;
+	currentGeneration[WIDTH/2] = 1;
 
 	int ch;
 	while((ch = getch()) != ESC) {
-		newGeneration(WIDTH, array);
-		draw(WIDTH, array);
+		newGeneration(WIDTH, currentGeneration);
+		draw(WIDTH, currentGeneration);
 		napms(100);
 	}
 
