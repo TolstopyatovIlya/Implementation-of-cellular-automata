@@ -19,6 +19,8 @@ void draw(const size_t WIDTH, int currentGeneration[]) {
 	for(size_t i = 0; i < WIDTH; ++i) {
 		printw(currentGeneration[i] ? "#" : " ");
 	}
+	printw("\n");
+	refresh();
 }
 
 int main(void) {
