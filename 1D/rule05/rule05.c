@@ -1,5 +1,4 @@
 #include <ncurses.h>
-#include <ncurses.h>
 
 #define ESC 27
 
